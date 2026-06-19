@@ -1,41 +1,32 @@
-import { supabase } from '@/lib/supabaseClient';
+import { Types } from 'mongoose';
 
-export interface InterviewSession {
-  id: string;
-  user_id: string;
-  topic: string;
+import { connectDB } from '@/lib/mongodb';
+import Session, {
+  toSessionRecord,
+  type SessionRecord,
+} from '@/models/Session';
 
-  session_data: {
-    question: string;
-    answer: string;
-    userAnswer?: string;
-    feedback?: string;
-  }[];
-
-  created_at: string;
-}
+export type InterviewSession = SessionRecord;
 
 export async function getPastSessions(
   userId: string
 ): Promise<InterviewSession[]> {
 
   try {
-
-    const { data, error } = await supabase
-      .from<InterviewSession>(
-        'interview_sessions'
-      )
-      .select('*')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false })
-      .execute();
-
-    if (error) {
-      console.error('Supabase Fetch Error:', error);
+    if (!Types.ObjectId.isValid(userId)) {
       return [];
     }
 
-    return data || [];
+    await connectDB();
+
+    const sessions = await Session.find({
+      userId: new Types.ObjectId(userId),
+    })
+      .sort({ createdAt: -1 });
+
+    return sessions.map((session) =>
+      toSessionRecord(session.toObject())
+    );
 
   } catch (error) {
 

@@ -1,9 +1,58 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+
+import { verifyToken } from '@/lib/jwt';
 import { saveSession } from '@/lib/db/sessionSaver';
+
+interface DecodedToken {
+  userId: string;
+  email: string;
+  iat?: number;
+  exp?: number;
+}
 
 export async function POST(request: Request) {
   try {
     console.log('========== SESSION API HIT ==========');
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
+
+    if (!token) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Unauthorized',
+        },
+        { status: 401 }
+      );
+    }
+
+    let userId: string;
+
+    try {
+      const decoded =
+        verifyToken(token) as DecodedToken;
+      userId = decoded.userId;
+    } catch {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Unauthorized',
+        },
+        { status: 401 }
+      );
+    }
+
+    if (!userId) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Unauthorized',
+        },
+        { status: 401 }
+      );
+    }
 
     const body = await request.json();
 
@@ -21,8 +70,6 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
-    const userId = 'temp-user-id';
 
     console.log('CALLING saveSession()');
 
@@ -58,7 +105,7 @@ export async function POST(request: Request) {
       { status: 200 }
     );
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('SESSION API CRASH:', error);
 
     return NextResponse.json(

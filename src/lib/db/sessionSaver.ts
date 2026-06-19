@@ -1,11 +1,9 @@
-import { supabase } from '@/lib/supabaseClient';
-
-export interface SessionData {
-  question: string;
-  answer: string;
-  userAnswer?: string;
-  feedback?: string;
-}
+import { connectDB } from '@/lib/mongodb';
+import Session, {
+  normalizeSessionData,
+  toSessionRecord,
+  type SessionData,
+} from '@/models/Session';
 
 export async function saveSession(
   topic: string,
@@ -18,36 +16,26 @@ export async function saveSession(
     console.log('USER ID:', userId);
     console.log('SESSION DATA LENGTH:', sessionData.length);
 
-    const { data, error } = await supabase
-      .from('interview_sessions')
-      .insert([
-        {
-          topic,
-          session_data: sessionData,
-          user_id: userId,
-        },
-      ])
-      .select()
-      .execute();
+    await connectDB();
 
-    console.log('INSERT DATA:', data);
-    console.log('INSERT ERROR:', error);
+    const normalizedSessionData =
+      normalizeSessionData(sessionData);
 
-    if (error) {
-      console.error('Supabase Save Error:', error);
+    const createdSession = await Session.create({
+      userId,
+      topic,
+      sessionData: normalizedSessionData,
+    });
 
-      return {
-        success: false,
-        data: null,
-        error,
-      };
-    }
+    const savedSession = toSessionRecord(
+      createdSession.toObject()
+    );
 
     console.log('SESSION SAVED SUCCESSFULLY');
 
     return {
       success: true,
-      data,
+      data: [savedSession],
       error: null,
     };
 
