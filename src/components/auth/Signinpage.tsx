@@ -13,8 +13,9 @@ interface LoginFormProps {
 
 function GoogleButton() {
   return (
-    <button
-      type="button"
+    <a
+      href="/api/auth/google"
+      role="button"
       aria-label="Continue with Google"
       className="flex h-11 w-full items-center justify-center gap-3 rounded-[10px] border border-zinc-200 bg-white text-[15px] font-medium text-zinc-600 shadow-[0_1px_3px_rgba(0,0,0,0.08)] transition hover:bg-zinc-50 sm:h-12"
     >
@@ -41,7 +42,7 @@ function GoogleButton() {
         />
       </svg>
       <span>Continue with Google</span>
-    </button>
+    </a>
   );
 }
 
