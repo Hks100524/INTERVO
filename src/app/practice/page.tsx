@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useAuth } from '@/context/AuthContext';
 import { useAuthModal } from '@/context/AuthModalContext';
-import Link from "next/link";
 
 interface QAPair {
   question: string;
@@ -196,13 +195,16 @@ export default function HomePage() {
   const handleFeedbackReceived = async (index: number, userAnswer: string, feedback: string, isCorrectEnough: boolean) => {
     try {
       // Update the qaPairs state with user answer, feedback, and correctness
-      const updatedQaPairs = [...qaPairs];
-      updatedQaPairs[index] = {
-        ...updatedQaPairs[index],
-        userAnswer,
-        feedback,
-        is_correct_enough: isCorrectEnough,
-      };
+      const updatedQaPairs = qaPairs.map((qa, qaIndex) =>
+        qaIndex === index
+          ? {
+              ...qa,
+              userAnswer,
+              feedback,
+              is_correct_enough: isCorrectEnough,
+            }
+          : qa
+      );
       setQaPairs(updatedQaPairs);
 
       // Save session to backend only for authenticated users
@@ -217,13 +219,22 @@ export default function HomePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           topic: currentTopic,
-          sessionData: updatedQaPairs.map(qa => ({
+          sessionData: updatedQaPairs.map((qa, qaIndex) => ({
             question: qa.question,
             answer: qa.answer,
-            user_answer: qa.userAnswer,
+            user_answer:
+              qaIndex === index
+                ? userAnswer
+                : qa.userAnswer,
             ai_feedback: {
-              feedback: qa.feedback,
-              is_correct_enough: qa.is_correct_enough ?? false,
+              feedback:
+                qaIndex === index
+                  ? feedback
+                  : qa.feedback,
+              is_correct_enough:
+                qaIndex === index
+                  ? isCorrectEnough
+                  : qa.is_correct_enough ?? false,
             },
           })),
         }),
@@ -236,7 +247,7 @@ export default function HomePage() {
 
       const result = await response.json();
       console.log('Session saved successfully:', result);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Failed to save session to database:', error);
       // Optionally show error to user
       // setError('Failed to save your progress. Your data is still available in this session.');
@@ -471,7 +482,7 @@ export default function HomePage() {
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 className="text-xl font-bold">You've completed {qaPairs.length} questions!</h3>
+                <h3 className="text-xl font-bold">You&apos;ve completed {qaPairs.length} questions!</h3>
               </div>
               <p className="text-gray-400 text-sm">Keep practicing to master your skills 🚀</p>
             </div>
