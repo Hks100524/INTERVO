@@ -1,279 +1,162 @@
-# 🚀 INTERVO - AI Interview Preparation Platform
+# 🚀 INTERVO
 
-INTERVO is a full-stack AI-powered interview preparation platform that helps students and job seekers practice technical interviews, receive AI-generated feedback, track performance, and improve their interview skills.
+### AI-Powered Interview Preparation Platform
+
+INTERVO is a production-ready full-stack AI interview preparation platform that helps students and job seekers practice technical interviews, receive AI-generated feedback, track performance, and improve interview readiness through personalized practice sessions.
 
 🌐 Live Demo: https://intervo-azure.vercel.app
 
 ---
 
-## 📌 Overview
+## 🎯 Problem Statement
 
-Preparing for technical interviews can be difficult without proper feedback.
+Many students struggle to prepare for technical interviews because they lack:
 
-INTERVO solves this problem by providing:
+- Structured interview practice
+- Instant feedback
+- Performance tracking
+- Personalized improvement suggestions
 
-- AI-generated interview questions
-- Real-time answer evaluation
-- AI-powered feedback
-- Performance analytics
-- Session tracking
-- User authentication
-- Google OAuth login
-
-The platform simulates an interview environment and helps users improve through continuous practice.
+INTERVO solves this by simulating interview sessions and providing AI-powered evaluation and analytics.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-### 🔐 Authentication & Security
+### Authentication
 
-- JWT Authentication
-- Secure Login & Signup
+- Secure JWT Authentication
 - Google OAuth Login
 - Protected Routes
-- Persistent Sessions
-- Secure Cookie Handling
+- Persistent User Sessions
 
-### 🤖 AI Interview Engine
+### AI Interview Engine
 
-- Dynamic Interview Questions
-- AI-Powered Answer Analysis
-- Instant Feedback Generation
+- AI Generated Questions
+- AI Powered Feedback
+- Answer Evaluation
 - Performance Scoring
-- Improvement Suggestions
 
-### 📊 Dashboard Analytics
+### Analytics Dashboard
 
-- Total Practice Sessions
-- Average Performance Score
-- Session History Tracking
-- Progress Monitoring
+- Session Tracking
+- Performance Monitoring
+- Average Score Analysis
+- Historical Results
 
-### 👤 Profile Management
+### User Profile
 
-- Profile Information
-- Username Update
-- Password Change
+- Username Management
+- Password Updates
 - Profile Image Upload
 - Google Account Integration
 
-### ☁️ Cloud Features
+### Cloud Services
 
-- Cloudinary Image Storage
-- MongoDB Atlas Database
+- MongoDB Atlas
+- Cloudinary Storage
 - Vercel Deployment
 
----
 
-## 🏗️ Tech Stack
+## 🏗️ System Architecture
+
+```text
+┌──────────────────────┐
+│        User          │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│   Next.js Frontend   │
+│  (React + TS)        │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Authentication Layer │
+│ JWT + Google OAuth   │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│   API Route Layer    │
+│  Next.js Backend     │
+└───────┬───────┬──────┘
+        │       │
+        │       │
+        ▼       ▼
+
+┌─────────────┐   ┌──────────────┐
+│ MongoDB     │   │ Gemini AI    │
+│ Atlas       │   │ Evaluation   │
+└──────┬──────┘   └──────┬───────┘
+       │                 │
+       └─────────┬───────┘
+                 │
+                 ▼
+
+      ┌─────────────────┐
+      │ Feedback Engine │
+      └────────┬────────┘
+               │
+               ▼
+
+      ┌─────────────────┐
+      │ Dashboard &     │
+      │ Analytics       │
+      └─────────────────┘
+```
+
+
+## 🚀 Why INTERVO?
+
+Unlike traditional CRUD projects, INTERVO combines:
+
+- Full Stack Development
+- Authentication Systems
+- AI Integration
+- Cloud Storage
+- Analytics
+- Production Deployment
+
+The project demonstrates practical experience in building scalable, real-world web applications using modern technologies.
+
+
+
+## 💡 Skills Demonstrated
 
 ### Frontend
 
-- Next.js 16
+- React
+- Next.js
 - TypeScript
 - Tailwind CSS
-- React
 
 ### Backend
 
-- Next.js API Routes
-- Node.js
+- REST APIs
+- Authentication
+- JWT
+- OAuth
 
 ### Database
 
 - MongoDB Atlas
 - Mongoose
 
-### Authentication
+### Cloud
 
-- JWT
-- Google OAuth 2.0
+- Cloudinary
+- Vercel
 
 ### AI
 
-- Google Gemini API
+- Gemini API Integration
 
-### Media Storage
+### Software Engineering
 
-- Cloudinary
-
-### Deployment
-
-- Vercel
-
----
-
-## 📂 Project Structure
-
-```bash
-src/
-│
-├── app/
-│   ├── api/
-│   │   ├── auth/
-│   │   ├── feedback/
-│   │   ├── generate/
-│   │   └── sessions/
-│   │
-│   ├── dashboard/
-│   ├── profile/
-│   ├── practice/
-│   └── home/
-│
-├── components/
-│   ├── auth/
-│   ├── dashboard/
-│   ├── profile/
-│   └── ui/
-│
-├── context/
-│
-├── lib/
-│   ├── mongodb/
-│   ├── oauth/
-│   └── cloudinary/
-│
-├── models/
-│
-└── middleware.ts
-```
-
----
-
-## 🔄 Application Flow
-
-```text
-User Login
-      ↓
-Authentication
-      ↓
-Dashboard
-      ↓
-Start Practice Session
-      ↓
-AI Generates Questions
-      ↓
-User Answers Questions
-      ↓
-Gemini AI Evaluates Answers
-      ↓
-Feedback & Score Generated
-      ↓
-Results Stored in MongoDB
-      ↓
-Dashboard Analytics Updated
-```
-
----
-
-## 📸 Screenshots
-
-### Home Page
-
-(Add Screenshot)
-
-### Dashboard
-
-(Add Screenshot)
-
-### Practice Page
-
-(Add Screenshot)
-
-### AI Feedback
-
-(Add Screenshot)
-
-### Profile Page
-
-(Add Screenshot)
-
----
-
-## 🔑 Environment Variables
-
-Create a `.env.local` file:
-
-```env
-MONGODB_URI=YOUR_MONGODB_URI
-
-JWT_SECRET=YOUR_SECRET
-
-GOOGLE_CLIENT_ID=YOUR_CLIENT_ID
-GOOGLE_CLIENT_SECRET=YOUR_CLIENT_SECRET
-GOOGLE_REDIRECT_URI=YOUR_REDIRECT_URI
-
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY
-
-CLOUDINARY_CLOUD_NAME=YOUR_CLOUD_NAME
-CLOUDINARY_API_KEY=YOUR_API_KEY
-CLOUDINARY_API_SECRET=YOUR_API_SECRET
-CLOUDINARY_FOLDER=YOUR_FOLDER
-```
-
----
-
-## ⚙️ Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/Hks100524/INTERVO.git
-```
-
-Move into project:
-
-```bash
-cd INTERVO
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Run development server:
-
-```bash
-npm run dev
-```
-
-Build project:
-
-```bash
-npm run build
-```
-
----
-
-## 🎯 Future Enhancements
-
-- Voice-Based Interviews
-- Video Interview Simulation
-- Resume Analyzer
-- ATS Score Checker
-- Company-Specific Interview Sets
-- DSA Interview Module
-- HR Interview Module
-- AI Career Roadmap Generator
-
----
-
-## 👨‍💻 Author
-
-Harshit Kumar Sharma
-
-- GitHub: https://github.com/Hks100524
-- LinkedIn: (Add Your LinkedIn URL)
-
----
-
-## ⭐ Support
-
-If you found this project useful, consider giving it a star.
-
-It helps the project grow and motivates further development.
-
-⭐ Star this repository if you like it.
+- Protected Routes
+- Session Management
+- Error Handling
+- API Design
+- Deployment Workflow
