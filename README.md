@@ -1,36 +1,279 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 INTERVO - AI Interview Preparation Platform
 
-## Getting Started
+INTERVO is a full-stack AI-powered interview preparation platform that helps students and job seekers practice technical interviews, receive AI-generated feedback, track performance, and improve their interview skills.
 
-First, run the development server:
+🌐 Live Demo: https://intervo-azure.vercel.app
+
+---
+
+## 📌 Overview
+
+Preparing for technical interviews can be difficult without proper feedback.
+
+INTERVO solves this problem by providing:
+
+- AI-generated interview questions
+- Real-time answer evaluation
+- AI-powered feedback
+- Performance analytics
+- Session tracking
+- User authentication
+- Google OAuth login
+
+The platform simulates an interview environment and helps users improve through continuous practice.
+
+---
+
+## ✨ Features
+
+### 🔐 Authentication & Security
+
+- JWT Authentication
+- Secure Login & Signup
+- Google OAuth Login
+- Protected Routes
+- Persistent Sessions
+- Secure Cookie Handling
+
+### 🤖 AI Interview Engine
+
+- Dynamic Interview Questions
+- AI-Powered Answer Analysis
+- Instant Feedback Generation
+- Performance Scoring
+- Improvement Suggestions
+
+### 📊 Dashboard Analytics
+
+- Total Practice Sessions
+- Average Performance Score
+- Session History Tracking
+- Progress Monitoring
+
+### 👤 Profile Management
+
+- Profile Information
+- Username Update
+- Password Change
+- Profile Image Upload
+- Google Account Integration
+
+### ☁️ Cloud Features
+
+- Cloudinary Image Storage
+- MongoDB Atlas Database
+- Vercel Deployment
+
+---
+
+## 🏗️ Tech Stack
+
+### Frontend
+
+- Next.js 16
+- TypeScript
+- Tailwind CSS
+- React
+
+### Backend
+
+- Next.js API Routes
+- Node.js
+
+### Database
+
+- MongoDB Atlas
+- Mongoose
+
+### Authentication
+
+- JWT
+- Google OAuth 2.0
+
+### AI
+
+- Google Gemini API
+
+### Media Storage
+
+- Cloudinary
+
+### Deployment
+
+- Vercel
+
+---
+
+## 📂 Project Structure
+
+```bash
+src/
+│
+├── app/
+│   ├── api/
+│   │   ├── auth/
+│   │   ├── feedback/
+│   │   ├── generate/
+│   │   └── sessions/
+│   │
+│   ├── dashboard/
+│   ├── profile/
+│   ├── practice/
+│   └── home/
+│
+├── components/
+│   ├── auth/
+│   ├── dashboard/
+│   ├── profile/
+│   └── ui/
+│
+├── context/
+│
+├── lib/
+│   ├── mongodb/
+│   ├── oauth/
+│   └── cloudinary/
+│
+├── models/
+│
+└── middleware.ts
+```
+
+---
+
+## 🔄 Application Flow
+
+```text
+User Login
+      ↓
+Authentication
+      ↓
+Dashboard
+      ↓
+Start Practice Session
+      ↓
+AI Generates Questions
+      ↓
+User Answers Questions
+      ↓
+Gemini AI Evaluates Answers
+      ↓
+Feedback & Score Generated
+      ↓
+Results Stored in MongoDB
+      ↓
+Dashboard Analytics Updated
+```
+
+---
+
+## 📸 Screenshots
+
+### Home Page
+
+(Add Screenshot)
+
+### Dashboard
+
+(Add Screenshot)
+
+### Practice Page
+
+(Add Screenshot)
+
+### AI Feedback
+
+(Add Screenshot)
+
+### Profile Page
+
+(Add Screenshot)
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env.local` file:
+
+```env
+MONGODB_URI=YOUR_MONGODB_URI
+
+JWT_SECRET=YOUR_SECRET
+
+GOOGLE_CLIENT_ID=YOUR_CLIENT_ID
+GOOGLE_CLIENT_SECRET=YOUR_CLIENT_SECRET
+GOOGLE_REDIRECT_URI=YOUR_REDIRECT_URI
+
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+
+CLOUDINARY_CLOUD_NAME=YOUR_CLOUD_NAME
+CLOUDINARY_API_KEY=YOUR_API_KEY
+CLOUDINARY_API_SECRET=YOUR_API_SECRET
+CLOUDINARY_FOLDER=YOUR_FOLDER
+```
+
+---
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Hks100524/INTERVO.git
+```
+
+Move into project:
+
+```bash
+cd INTERVO
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build project:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🎯 Future Enhancements
 
-To learn more about Next.js, take a look at the following resources:
+- Voice-Based Interviews
+- Video Interview Simulation
+- Resume Analyzer
+- ATS Score Checker
+- Company-Specific Interview Sets
+- DSA Interview Module
+- HR Interview Module
+- AI Career Roadmap Generator
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👨‍💻 Author
 
-## Deploy on Vercel
+Harshit Kumar Sharma
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- GitHub: https://github.com/Hks100524
+- LinkedIn: (Add Your LinkedIn URL)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## ⭐ Support
+
+If you found this project useful, consider giving it a star.
+
+It helps the project grow and motivates further development.
+
+⭐ Star this repository if you like it.
