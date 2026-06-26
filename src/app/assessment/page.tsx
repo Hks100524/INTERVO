@@ -1,22 +1,6 @@
 import AssessmentWizard from '@/components/assessment/AssessmentWizard';
 
-const featureCards = [
-  {
-    title: 'Resume or Topic',
-    description:
-      'Begin from a resume upload or a topic-first entry point, just like the rest of INTERVO’s guided flows.',
-  },
-  {
-    title: 'Company Standard',
-    description:
-      'Preview company-specific assessment behavior with a polished, production-style interface.',
-  },
-  {
-    title: 'Navigation Ready',
-    description:
-      'The assessment experience connects cleanly to attempt, result, and history previews.',
-  },
-];
+
 
 export default function AssessmentPage() {
   return (
@@ -26,42 +10,70 @@ export default function AssessmentPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.15),rgba(255,255,255,0))]" />
       </div>
 
-      <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col items-center px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <div className="w-full animate-fadeIn">
-          <div className="mb-8 text-center sm:mb-10">
-            <div className="inline-flex items-center rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-blue-200">
-              AI Readiness Test
-            </div>
-
-            <h1 className="mt-5 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 sm:text-4xl lg:text-5xl">
-              Assessment Landing
+      <div className="relative mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <div className="w-full space-y-12">
+          {/* Section 1: Header */}
+          <div className="space-y-4 sm:space-y-6">
+            <h1 className="text-4xl font-bold text-white sm:text-5xl">
+              AI Readiness
             </h1>
 
-            <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-gray-300 sm:text-base">
-              Preview a company-style assessment experience that fits naturally into INTERVO’s existing visual system.
+            <p className="max-w-2xl text-base leading-7 text-gray-300 sm:text-lg">
+              Take a company-standard assessment powered by AI. Get evaluated on real interview questions and receive personalized feedback.
             </p>
+
+            <div className="flex flex-wrap gap-3 pt-2">
+              <div className="inline-flex items-center rounded-full border border-gray-700/50 bg-gray-900/40 px-3 py-1.5 text-xs font-semibold text-gray-300">
+                ~10 min
+              </div>
+              <div className="inline-flex items-center rounded-full border border-gray-700/50 bg-gray-900/40 px-3 py-1.5 text-xs font-semibold text-gray-300">
+                5 Questions
+              </div>
+              <div className="inline-flex items-center rounded-full border border-gray-700/50 bg-gray-900/40 px-3 py-1.5 text-xs font-semibold text-gray-300">
+                AI Evaluation
+              </div>
+            </div>
           </div>
 
+          {/* Section 2: Assessment Builder */}
           <AssessmentWizard />
 
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {featureCards.map((card, index) => (
-              <div
-                key={card.title}
-                className="rounded-2xl border border-gray-700/50 bg-black/30 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-md animate-fadeIn"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 text-sm font-bold text-white shadow-lg shadow-blue-500/20">
-                  {index + 1}
+          {/* Section 3: What You'll Get */}
+          <div className="space-y-6">
+            <h2 className="text-xl font-bold text-white">
+              What You'll Get
+            </h2>
+
+            <div className="space-y-4">
+              {[
+                {
+                  icon: '✓',
+                  text: 'Company-specific questions tailored to your target role',
+                },
+                {
+                  icon: '✓',
+                  text: 'AI-powered evaluation of your answers',
+                },
+                {
+                  icon: '✓',
+                  text: 'Personalized feedback and improvement areas',
+                },
+                {
+                  icon: '✓',
+                  text: 'Performance report and readiness score',
+                },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 text-sm text-gray-300 sm:text-base"
+                >
+                  <span className="shrink-0 text-blue-400 font-bold">
+                    {item.icon}
+                  </span>
+                  <span>{item.text}</span>
                 </div>
-                <h2 className="mt-4 text-lg font-bold text-white">
-                  {card.title}
-                </h2>
-                <p className="mt-2 text-sm leading-6 text-gray-400">
-                  {card.description}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
