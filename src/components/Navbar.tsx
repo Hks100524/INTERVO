@@ -49,6 +49,13 @@ export default function Navbar() {
           </Link>
 
           <Link
+            href="/assessment"
+            className="text-sm font-semibold text-gray-300 transition-colors duration-200 hover:text-white"
+          >
+            AI Readiness
+          </Link>
+
+          <Link
             href="/dashboard"
             className="text-sm font-semibold text-gray-300 transition-colors duration-200 hover:text-white"
           >
@@ -78,6 +85,15 @@ export default function Navbar() {
           >
             <span className="text-xs font-medium">
               Practice
+            </span>
+          </Link>
+
+          <Link
+            href="/assessment"
+            className="flex flex-1 flex-col items-center justify-center gap-1 text-gray-400 transition-colors duration-200 hover:text-white"
+          >
+            <span className="text-xs font-medium">
+              AI Readiness
             </span>
           </Link>
 

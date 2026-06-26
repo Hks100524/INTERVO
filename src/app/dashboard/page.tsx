@@ -25,6 +25,29 @@ interface SessionsApiResponse {
   error?: string;
 }
 
+interface AssessmentHistoryItem {
+  id: string;
+  mode: 'resume' | 'topic';
+  company: string;
+  difficulty: string;
+  score: number | null;
+  status:
+    | 'draft'
+    | 'generated'
+    | 'submitted'
+    | 'evaluated'
+    | 'failed';
+  createdAt: string;
+  submittedAt: string | null;
+  topic: string | null;
+}
+
+interface AssessmentHistoryApiResponse {
+  success?: boolean;
+  history?: AssessmentHistoryItem[];
+  error?: string;
+}
+
 function isAttemptedQuestion(item: SessionDataItem) {
   return Boolean(
     item.userAnswer?.trim() ||
@@ -101,11 +124,47 @@ function formatSessionDate(createdAt: string) {
   }).format(date);
 }
 
+function formatAssessmentStatus(status: string | null | undefined) {
+  if (!status) {
+    return 'No assessments yet';
+  }
+
+  return status
+    .replace(/[_-]+/g, ' ')
+    .replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
+function calculateAverageAssessmentScore(
+  assessments: AssessmentHistoryItem[]
+) {
+  const scoredAssessments = assessments.filter(
+    (assessment) =>
+      typeof assessment.score === 'number' &&
+      Number.isFinite(assessment.score)
+  );
+
+  if (!scoredAssessments.length) {
+    return 0;
+  }
+
+  const totalScore = scoredAssessments.reduce(
+    (sum, assessment) =>
+      sum + (assessment.score ?? 0),
+    0
+  );
+
+  return Math.round(totalScore / scoredAssessments.length);
+}
+
 export default function DashboardPage() {
   const [sessions, setSessions] = useState<
     SessionHistoryItem[]
   >([]);
+  const [assessmentHistory, setAssessmentHistory] =
+    useState<AssessmentHistoryItem[]>([]);
   const [isLoading, setIsLoading] =
+    useState(true);
+  const [isAssessmentLoading, setIsAssessmentLoading] =
     useState(true);
   const [error, setError] = useState<
     string | null
@@ -185,11 +244,87 @@ export default function DashboardPage() {
     };
   }, []);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadAssessmentHistory() {
+      try {
+        setIsAssessmentLoading(true);
+
+        const response = await fetch(
+          '/api/assessment/history',
+          {
+            method: 'GET',
+            credentials: 'include',
+            cache: 'no-store',
+          }
+        );
+
+        const data =
+          (await response
+            .json()
+            .catch(() => null)) as
+            | AssessmentHistoryApiResponse
+            | null;
+
+        if (
+          !response.ok ||
+          !data?.success ||
+          !Array.isArray(data.history)
+        ) {
+          throw new Error(
+            data?.error ||
+              'Failed to load assessment history'
+          );
+        }
+
+        const sortedAssessments = [
+          ...data.history,
+        ].sort((left, right) => {
+          return (
+            new Date(right.createdAt).getTime() -
+            new Date(left.createdAt).getTime()
+          );
+        });
+
+        if (isMounted) {
+          setAssessmentHistory(sortedAssessments);
+        }
+      } catch (fetchError) {
+        console.error(
+          'Failed to load assessment history:',
+          fetchError
+        );
+
+        if (isMounted) {
+          setAssessmentHistory([]);
+        }
+      } finally {
+        if (isMounted) {
+          setIsAssessmentLoading(false);
+        }
+      }
+    }
+
+    void loadAssessmentHistory();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const totalSessions = sessions.length;
   const averageScore =
     calculateAverageScore(sessions);
   const performanceLevel =
     getPerformanceLevel(averageScore);
+  const totalAssessments = assessmentHistory.length;
+  const averageAssessmentScore =
+    calculateAverageAssessmentScore(assessmentHistory);
+  const latestAssessmentStatus =
+    formatAssessmentStatus(
+      assessmentHistory[0]?.status
+    );
 
   return (
     <main className="relative min-h-screen overflow-hidden">
@@ -255,6 +390,57 @@ export default function DashboardPage() {
               </p>
             </div>
 
+          </div>
+
+          <div className="bg-black/30 border border-gray-800 rounded-2xl p-6 mb-8">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-white">
+                  AI Readiness
+                </h2>
+                <p className="text-gray-400 mt-2">
+                  Assessment overview powered by your completed readiness checks.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3 mt-6">
+              <div className="bg-black/30 border border-gray-800 rounded-2xl p-6">
+                <h3 className="text-gray-400 text-sm">
+                  Total Assessments
+                </h3>
+
+                <p className="text-3xl font-bold text-white mt-2">
+                  {isAssessmentLoading
+                    ? 'Loading...'
+                    : totalAssessments}
+                </p>
+              </div>
+
+              <div className="bg-black/30 border border-gray-800 rounded-2xl p-6">
+                <h3 className="text-gray-400 text-sm">
+                  Average Score
+                </h3>
+
+                <p className="text-3xl font-bold text-white mt-2">
+                  {isAssessmentLoading
+                    ? 'Loading...'
+                    : `${averageAssessmentScore}%`}
+                </p>
+              </div>
+
+              <div className="bg-black/30 border border-gray-800 rounded-2xl p-6">
+                <h3 className="text-gray-400 text-sm">
+                  Latest Assessment Status
+                </h3>
+
+                <p className="text-3xl font-bold text-green-400 mt-2">
+                  {isAssessmentLoading
+                    ? 'Loading...'
+                    : latestAssessmentStatus}
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Session History */}
