@@ -1,6 +1,6 @@
 # INTERVO
 
-### AI-powered interview preparation platform
+### AI-powered interview preparation platformmmmmmmmm
 
 INTERVO is a full-stack web application for practicing technical interviews with AI-generated questions and instant answer evaluation. A user can create an account, choose a topic or upload a resume, attempt an assessment, receive feedback, and review progress from the dashboard.
 
