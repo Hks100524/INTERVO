@@ -1,4 +1,4 @@
-# INTERVO -
+# INTERVO 
 
 ### AI-powered interview preparation platform
 
@@ -38,7 +38,7 @@ INTERVO combines an interactive practice experience with an AI assessment engine
 5. Open **Assessment** to create a structured assessment from a topic or resume.
 6. Review the result, score breakdown, strengths, improvements, and recommendations.
 7. Use **Dashboard** and **Assessment History** to track performance over time.
-8. Manage username, password, and profile image from **Profile**.
+8. Manage username, password, and profile image from **Profile**..
 
 ## Features
 
