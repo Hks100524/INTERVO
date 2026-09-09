@@ -1,4 +1,4 @@
-# INTERVO
+# INTERVO -
 
 ### AI-powered interview preparation platform
 
